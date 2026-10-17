@@ -1,0 +1,132 @@
+
+:root{--brand:#B0357A;--brand-dark:#8f2a64;--ink:#1b1f3b;--soft:#F0F2FF;--ok:#4caf1d;--bs-body-font-family:'Inter',system-ui,sans-serif;--bs-body-bg:#fff}
+html{scroll-behavior:smooth}
+body{counter-reset:cartn}
+img{font-size:.75rem;color:#999}
+.sr{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.add:checked{counter-increment:cartn}
+
+/* ---- الأزرار ---- */
+.btn-brand{--bs-btn-color:#fff;--bs-btn-bg:var(--brand);--bs-btn-border-color:var(--brand);--bs-btn-hover-color:#fff;--bs-btn-hover-bg:var(--brand-dark);--bs-btn-hover-border-color:var(--brand-dark);--bs-btn-active-color:#fff;--bs-btn-active-bg:var(--brand-dark);--bs-btn-active-border-color:var(--brand-dark);border-radius:10px}
+.btn-outline-ink{--bs-btn-color:var(--ink);--bs-btn-border-color:var(--ink);--bs-btn-hover-color:#fff;--bs-btn-hover-bg:var(--ink);--bs-btn-hover-border-color:var(--ink);--bs-btn-border-width:2px;border-radius:8px;padding:.6rem 1.5rem}
+.t-done{display:none}
+
+/* ---- الـ Navbar ---- */
+.bars{display:flex;align-items:center;gap:2px;height:18px}
+.bars i{display:block;width:2px;background:var(--ink);border-radius:2px}
+.bars i:nth-child(1){height:8px}.bars i:nth-child(2){height:14px}.bars i:nth-child(3){height:18px}.bars i:nth-child(4){height:12px}.bars i:nth-child(5){height:7px}
+.nav-link{position:relative;color:#000}
+.nav-link::after{content:"";position:absolute;left:25%;right:25%;bottom:2px;height:1.5px;background:var(--ink);transform:scaleX(0);transition:transform .3s}
+.nav-link:hover::after{transform:scaleX(1)}
+body:has(#collection:target) .nav-link[href="#collection"]::after,
+body:has(#new:target) .nav-link[href="#new"]::after,
+body:has(#gamers:target) .nav-link[href="#gamers"]::after{transform:scaleX(1)}
+.icon-btn{display:grid;place-items:center;width:36px;height:36px;color:#000;cursor:pointer;transition:transform .2s}
+.icon-btn:hover{transform:scale(1.12)}
+.navbar-toggler{cursor:pointer}
+/* checkbox  */
+#menu-toggle:checked ~ .navbar .navbar-collapse{display:block;animation:fade .3s}
+.cart-badge{display:none;position:absolute;top:-4px;right:-6px;background:var(--brand);color:#fff;font-size:.7rem}
+.cart-badge::after{content:counter(cartn)}
+body:has(.add:checked) .cart-badge{display:inline-block;animation:bump .4s}
+@keyframes bump{50%{transform:scale(1.4)}}
+.searchbar{max-height:0;overflow:hidden;transition:max-height .35s}
+#search-toggle:checked ~ .searchbar{max-height:90px}
+
+/* ---- target ---- */
+.page{display:none;padding-bottom:4rem}
+#home{display:block}
+/*  hero */
+body:not(:has(.page:not(#home):target,.pdp:target)) #collection{display:block}
+body:has(.page:not(#home):target,.pdp:target) #home{display:none}
+.page:target{display:block;animation:fade .45s ease}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.narrow{max-width:760px;margin-left:auto;margin-right:auto}
+
+/* ---- الـ Hero ---- */
+.hero{background:var(--brand);border-radius:8px 8px 120px 8px;padding:3rem clamp(1.5rem,6vw,6.5rem);min-height:430px;display:flex;align-items:center;margin-top:.5rem}
+.hero .row{width:100%}
+.hero-img{position:relative;display:grid;place-items:center}
+.glow{position:absolute;width:min(420px,90%);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.45),transparent 70%)}
+.hero-img img{position:relative;width:min(300px,80%);aspect-ratio:1;object-fit:contain;animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-14px)}}
+@media (max-width:767px){.hero{border-radius:8px 8px 70px 8px;min-height:0}.hero-img{order:-1}}
+
+/* ----  دواير الألوان ---- */
+.slot{width:100%;aspect-ratio:1;object-fit:contain;padding:8%;background:var(--soft);border-radius:6px}
+.card .slot{aspect-ratio:1/.95;transition:transform .35s}
+.card:hover .slot{transform:translateY(-6px)}
+.dots{display:flex;gap:12px;flex-wrap:wrap}
+.dot{display:block;width:26px;height:26px;border-radius:50%;outline:2px solid transparent;outline-offset:2px;transition:outline-color .2s,transform .2s}
+.pick .dot{cursor:pointer}.pick .dot:hover{transform:scale(1.12)}
+.c-black{background:#2a2a2a}.c-gray{background:#666}.c-navy{background:#1c2257}.c-lgray{background:#d6d6d6}.c-orange{background:#c85a0b}.c-red{background:#a61f1a}.c-sand{background:#d5b58f}
+@media (max-width:575px){.dot{width:20px;height:20px}.card h3{font-size:1.05rem}}
+
+/* ---- popup المنتج ---- */
+.pdp{position:fixed;inset:0;z-index:1050;background:#fff;overflow-y:auto;opacity:0;visibility:hidden;transform:translateY(20px);transition:opacity .3s,transform .35s,visibility .3s}
+.pdp:target{opacity:1;visibility:visible;transform:none}
+.pdp .container{max-width:1100px}
+.pdp .btn-close{transition:transform .25s}
+.pdp .btn-close:hover{transform:rotate(90deg)}
+.main-img{aspect-ratio:1/1.1}
+.k0:checked ~ .row .pick label:nth-child(1),.k1:checked ~ .row .pick label:nth-child(2),.k2:checked ~ .row .pick label:nth-child(3),.k3:checked ~ .row .pick label:nth-child(4){outline-color:var(--ink)}
+.info .btn{width:100%;max-width:280px}
+.rel{flex:0 0 130px;font-size:.72rem;display:grid;gap:4px;align-content:start;color:#000;text-decoration:none}
+.rel .slot{margin-bottom:4px;transition:transform .25s}
+.rel:hover .slot{transform:translateY(-4px)}
+
+/* ---- السلة والـ Checkout ---- */
+.back{color:#555;text-decoration:none;transition:color .2s}.back:hover{color:var(--brand)}
+body:has(.add:checked) .cart-empty{display:none}
+.cart-item{display:none;animation:fade .4s}
+.remove{color:#555;font-size:.9rem;text-decoration:underline;cursor:pointer}.remove:hover{color:var(--brand)}
+.cart-foot{display:none}
+body:has(.add:checked) .cart-foot{display:flex}
+.field-col{max-width:320px}
+.form-control{background:#e9e9e9;border:2px solid transparent;border-radius:10px;transition:border-color .2s,background .2s}
+.form-control:focus{background:#fff;border-color:var(--brand);box-shadow:none}
+.order-btn{display:block;max-width:320px}
+#ordered:checked ~ main .order-btn{--bs-btn-bg:var(--ok);--bs-btn-border-color:var(--ok);--bs-btn-hover-bg:var(--ok);--bs-btn-hover-border-color:var(--ok)}
+#ordered:checked ~ main .order-btn .t-add{display:none}
+#ordered:checked ~ main .order-btn .t-done{display:inline}
+@media (max-width:575px){.field-col,.order-btn{max-width:none}.cart-foot .btn{width:100%}}
+
+/* ---- Add To Cart ---- */
+body:has(#add-bd:checked) #ci-bd,
+body:has(#add-jbl:checked) #ci-jbl,
+body:has(#add-se1:checked) #ci-se1,
+body:has(#add-wh:checked) #ci-wh,
+body:has(#add-ap:checked) #ci-ap,
+body:has(#add-bs3:checked) #ci-bs3,
+body:has(#add-apm:checked) #ci-apm,
+body:has(#add-se:checked) #ci-se{display:flex}
+
+body:has(#add-bd:checked) #p-bd .add-btn,
+body:has(#add-jbl:checked) #p-jbl .add-btn,
+body:has(#add-se1:checked) #p-se1 .add-btn,
+body:has(#add-wh:checked) #p-wh .add-btn,
+body:has(#add-ap:checked) #p-ap .add-btn,
+body:has(#add-bs3:checked) #p-bs3 .add-btn,
+body:has(#add-apm:checked) #p-apm .add-btn,
+body:has(#add-se:checked) #p-se .add-btn{--bs-btn-bg:var(--ok);--bs-btn-border-color:var(--ok);--bs-btn-hover-bg:var(--ok);--bs-btn-hover-border-color:var(--ok);--bs-btn-active-bg:var(--ok)}
+
+body:has(#add-bd:checked) #p-bd .t-add,
+body:has(#add-jbl:checked) #p-jbl .t-add,
+body:has(#add-se1:checked) #p-se1 .t-add,
+body:has(#add-wh:checked) #p-wh .t-add,
+body:has(#add-ap:checked) #p-ap .t-add,
+body:has(#add-bs3:checked) #p-bs3 .t-add,
+body:has(#add-apm:checked) #p-apm .t-add,
+body:has(#add-se:checked) #p-se .t-add{display:none}
+
+body:has(#add-bd:checked) #p-bd .t-done,
+body:has(#add-jbl:checked) #p-jbl .t-done,
+body:has(#add-se1:checked) #p-se1 .t-done,
+body:has(#add-wh:checked) #p-wh .t-done,
+body:has(#add-ap:checked) #p-ap .t-done,
+body:has(#add-bs3:checked) #p-bs3 .t-done,
+body:has(#add-apm:checked) #p-apm .t-done,
+body:has(#add-se:checked) #p-se .t-done{display:inline}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
